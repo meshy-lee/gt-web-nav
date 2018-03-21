@@ -1,0 +1,59 @@
+html{
+    height: auto;
+}
+
+.gt-toast {
+    text-align: left;
+}
+
+/* modal */
+
+.gt-modal {
+    display: block;
+}
+.gt-modal__content, .gt-modal__body {
+    overflow: visible;
+}
+
+.gt-modal.gt-fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+    .gt-modal__content {
+        position: absolute;
+        left: 50%;
+        top: 30%;
+        transform: translate(-50%, -30%);
+        transition: all 0.3s ease-out;
+    }
+}
+
+.gt-fade.gt-in .gt-modal__content {
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.gt-toast {
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/* modal end */
+
+/* form */
+.gt-form-bd-auto {
+    .gt-form-group{
+        &:last-child{
+            .gt-form__label, .gt-form__content{
+                padding-bottom: 0;
+            }
+        }
+    }
+}
+/* form end */

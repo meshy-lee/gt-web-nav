@@ -1,0 +1,48 @@
+.gt-font-ul{
+  padding-top: 10px;
+  .gt-fonts-item {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    padding-top: 12px;
+    margin: 0 20px 20px 0;
+
+    border: 1px dashed #999999;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    &:hover{
+      border-color: #01acf3;
+    }
+    &:nth-child(9),&:nth-child(10) {
+      margin-bottom: 0;
+    }
+    .nav-iconfont{
+        vertical-align: middle;
+        font-size: 38px;
+    }
+    p{
+        margin-top: 4px;
+        font-size: 14px;
+    }
+  }
+  .seleted-font-item{
+    border-color: #01acf3;
+  }
+  .disabled-font-item{
+    opacity: 0.4;
+    cursor: not-allowed;
+    &:hover{
+      border-color: #999999;
+    }
+  }
+}
+
+.gt-upload-img__cell{
+  .gt-upload-img{
+    width: 120px;
+    height: 120px;
+  }
+}

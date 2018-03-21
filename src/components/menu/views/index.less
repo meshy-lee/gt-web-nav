@@ -1,0 +1,108 @@
+.gt-bar {
+    top: 65px;
+    left: -176px;
+    transition: all 0.3s;
+    strong{
+        display: none;
+    }
+    .update-edit-wrap, .delete-edit-wrap{
+        display: none;
+    }
+    .gt-menu__txt{
+        padding-left: 14px;
+    }
+}
+
+.bar-edit {
+    .gt-menu__hd{
+        text-align: center;
+        margin: 0;
+        border: none;
+        padding-left: 34px;
+        .nav-iconfont{
+            font-size: 40px;
+        }
+        .update-edit-wrap, .delete-edit-wrap{
+            width: 50%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+        }
+        .update-edit-wrap{
+            left: -4px;
+            .update-btn{
+                width: 176px;
+                height: 100%;
+
+                position: absolute;
+                left: -176px;
+                background: #f89e35;
+                opacity: 0.4;
+                transition: all 0.3s;
+
+                line-height: 70px;
+                color: #ffffff;
+                font-size: 18px;
+                text-decoration: none;
+                
+            }
+            &:hover{
+                .update-btn{
+                    left: 0;
+                    opacity: 1;
+                    transition: all 0.3s;
+                }
+            }
+        }
+        .delete-edit-wrap{
+            right: -1px;
+            top: 0;
+            .delete-btn{
+                width: 176px;
+                height: 100%;
+
+                position: absolute;
+                right: -176px;
+                background: #f16464;
+                opacity: 0.4;
+                transition: all 0.3s;
+
+                line-height: 70px;
+                color: #ffffff;
+                font-size: 18px;
+                text-decoration: none;
+                
+            }
+            &:hover{
+                .delete-btn{
+                    right: 0px;
+                    opacity: 1;
+                    transition: all 0.3s;
+                }
+            }
+        }
+        img{
+            height: 50px;
+            width: 50px;
+        }
+    }
+    .gt-menu__txt{
+        transition: all 0.3s;
+        position: absolute;
+        transform: translate(100%, 0);
+        opacity: 0;
+        display: none;
+    }
+}
+
+.gt-bar-in {
+    left: 0;
+}
+.gt-menu__hd{
+    img{
+        width: 24px;
+        height: 24px;
+        vertical-align: middle;
+    }
+}
