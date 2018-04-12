@@ -55,4 +55,10 @@ function Toast (opts = {}) {
     }, mergeOpts.timeout)
   })
 }
-React.Component.prototype.$toast = Toast
+Object.defineProperty(React.Component.prototype, '$toast', {
+  value: Toast
+})
+Object.defineProperty(React, '$toast', {
+  value: Toast
+})
+// React.Component.prototype.$toast = Toast

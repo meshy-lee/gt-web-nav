@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import cl from 'classnames'
 import PropTypes from 'prop-types'
 import {ModalWrap} from './../../index'
-import BusinessMainModal from './../../../page/business_line/businessMainModal'
-import * as actions from './../../../store/actions'
+import BusinessMainModal from '@/page/business_line/businessMainModal'
+import * as actions from '@/store/actions'
 import './index.less'
 class MenuPanel extends Component {
   constructor () {
@@ -54,13 +54,13 @@ class MenuPanel extends Component {
             {
               this.props.data.map((ele, index) => {
                 return (<li key={index}>
-                  <a className="gt-menu__hd" href="javaScript:;">
+                  <a href={ele.id} className="gt-menu__hd">
                     <div className="update-edit-wrap">
-                      <a className="update-btn" href="javaScript:;">更新</a>
+                      <button className="update-btn" type='button'>更新</button>
                     </div>
-                    <img src={'/' + ele.url}/>
+                    <img src={ele.url}/>
                     <div className="delete-edit-wrap">
-                      <a className="delete-btn" href="javaScript:;">删除</a>
+                      <button className="delete-btn" type='button'>删除</button>
                     </div>
                     <span className="gt-menu__txt">{ele.name}</span>
                   </a>

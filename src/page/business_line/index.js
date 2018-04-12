@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Topbar from './../../components/topbar/index'
-import MenuPanel from './../../components/menu/views/menu_panel'
+import Topbar from '@/components/topbar/index'
+import MenuPanel from '@/components/menu/views/menu_panel'
 
 class BusinessLineIndex extends Component {
   render () {

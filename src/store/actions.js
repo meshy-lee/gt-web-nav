@@ -1,6 +1,6 @@
 import {FETCH_STARTED, FETCH_SUCCESS, FETCH_FAILURE} from './action_types.js'
-import {getBusinessLineList} from './../api/business_line'
-import {GlobalLoading} from './../components/index'
+import {getBusinessLineList} from '@/api/business_line'
+import {GlobalLoading} from '@/components/index'
 export const fetchMenuStart = () => ({type: FETCH_STARTED})
 
 export const fetchMenuSuccess = (data) => ({
@@ -16,12 +16,8 @@ export const fetchBusinessLine = () => {
     dispatch(fetchMenuStart())
     getBusinessLineList().then(res => {
       gl()
-      res.json().then((responseJson) => {
-        // console.log(responseJson.data)
-        dispatch(fetchMenuSuccess(responseJson.data))
-      }).catch((error) => {
-        dispatch(fetchMenuFailure())
-      })
+      if (res.result) dispatch(fetchMenuFailure())
+      else dispatch(fetchMenuSuccess(res.data))
     }, res => {
       gl()
     })

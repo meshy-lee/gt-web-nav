@@ -64,15 +64,15 @@ class BusinessMainModal extends Component {
   uploadImg (e) {
     let that = this
     let reg = /[.](jpg|gif|png|JPG|PNG|GIF|jpeg)$/
-
+    if (!e.target.files[0]) return
     if (e.target.files[0].name.match(reg) == null) {
       this.$toastr({type: 'toast-error', message: '文件格式不正确'})
-      return false
+      return
     }
     this.$fileName = e.target.files[0].name
     if (e.target.files[0].size > 51200) {
       this.$toastr({type: 'toast-error', message: '图片需小于50KB'})
-      return false
+      return
     }
 
     const target = e.target.files[0]
@@ -88,21 +88,17 @@ class BusinessMainModal extends Component {
 
     // console.log(data)
     that._UploadImg({body: data}).then(res => {
-      res.json().then((responseJson) => {
-        console.log(responseJson)
-        if (!responseJson.result) {
-          this.$toast({
-            type: 'success',
-            message: '上传成功!'
-          })
-          this.setItemValidate(responseJson.url, 'imgUrl', true)
-        }
-      }).catch((error) => {
-      })
+      console.log(res)
+      if (!res.result) {
+        this.$toast({
+          type: 'success',
+          message: '上传成功!'
+        })
+        this.setItemValidate(res.url, 'imgUrl', true)
+      }
       let reader = new FileReader()
       reader.readAsDataURL(target)
       reader.onload = function (ev) {
-        console.log(ev)
         let image = new Image()
         image.src = this.result
         image.onload = function () {
@@ -137,19 +133,11 @@ class BusinessMainModal extends Component {
   _Add (params) {
     console.log(params)
     addBusinessLine(params).then(res => {
-      // console.log(res)
-      res.json().then((responseJson) => {
-        // console.log(responseJson)
-        this.$toast({
-          type: 'success',
-          message: responseJson.msg || '添加成功!'
-        })
-        // this.props.dispatch(actions.fetchBusinessLine())
-        this.props.comfirm()
-        // dispatch(fetchMenuSuccess(responseJson.data))
-      }).catch((error) => {
-        // dispatch(fetchMenuFailure())
+      this.$toast({
+        type: 'success',
+        message: res.msg || '添加成功!'
       })
+      this.props.comfirm()
     })
   }
   _Update () {
