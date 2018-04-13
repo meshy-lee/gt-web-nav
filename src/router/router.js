@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {Router, Route, IndexRedirect, browserHistory, IndexRoute} from 'react-router'
+import {Router, Route, IndexRedirect, hashHistory, IndexRoute} from 'react-router'
 // import Box from './router_component/box'
 import {connect} from 'react-redux'
 import App from './../App'
-const BussinessLine = (location, cb) => {
+const BusinessLineIndex = (location, cb) => {
   require.ensure([], require => {
     cb(null, require('./../page/business_line/index').default)
   }, 'bussinessLine')
@@ -18,14 +18,15 @@ const NotFound = (location, cb) => {
     cb(null, require('./../page/not_found/index').default)
   }, 'NotFound')
 }
+console.log(BusinessLineIndex)
 class PageRouter extends Component {
   render () {
     const init = this.props.init
     return (
-      <Router history={browserHistory}>
+      <Router history={hashHistory}>
         <Route name='App' path="/" component={App}>
-          <IndexRedirect to="/bussinessLine" />
-          <Route name='bussinessLine' path="bussinessLine" getComponent={BussinessLine}>
+          <IndexRedirect to="bussinessLine" />
+          <Route name='bussinessLine' path="bussinessLine" getComponent={BusinessLineIndex}>
             <Route name='dashboard' path="/bussinessLine/:id/dashboard" getComponent={Dashboard}>
             </Route>
           </Route>

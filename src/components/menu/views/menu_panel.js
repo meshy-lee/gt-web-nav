@@ -54,7 +54,7 @@ class MenuPanel extends Component {
             {
               this.props.data.map((ele, index) => {
                 return (<li key={index}>
-                  <a href={ele.id} className="gt-menu__hd">
+                  <a href={'#bussinessLine/' + ele.id + '/dashboard'} className="gt-menu__hd">
                     <div className="update-edit-wrap">
                       <button className="update-btn" type='button'>更新</button>
                     </div>
