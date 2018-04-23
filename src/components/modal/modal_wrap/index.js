@@ -13,6 +13,7 @@ function ModalWrap (opts = {}, WrapperComponent) {
     ...opts
   }
   const oDiv = document.createElement('div')
+  oDiv.className = 'modal-root'
   const oBody = document.getElementsByTagName('body')[0]
 
   return new Promise((resolve, reject) => {
@@ -41,4 +42,5 @@ function ModalWrap (opts = {}, WrapperComponent) {
     ReactDOM.render(element, oDiv)
   })
 }
+Object.defineProperty(React.Component.prototype, '$modalWrap', {value: ModalWrap})
 export default ModalWrap

@@ -1,8 +1,7 @@
 #dashboard-container{
   // padding-top: 85px;
   min-width: 1000px;
-  margin-left: 195px;
-  margin-right: 20px;
+  margin: 0 20px 20px 195px;
   padding: 0 20px 0 20px;
   position: relative;
   top: 85px;
@@ -34,5 +33,34 @@
   }
   .cell-body{
     min-height: 200px;
+  }
+}
+
+.gt-form-horizontal-group{
+  .gt-input--ws{
+    width: 100%;
+    max-width: none;
+    .fl{
+      margin-right: 20px;
+      &:last-child{
+        margin-right: 0;
+      }
+    }
+  }
+  .gt-form__content{
+    .gt-form__label{
+      display: inline-block;
+    }
+    .gt-form-control{
+      width: 134px;
+    }
+    .gt-icon{
+      margin-left: 10px;
+      padding: 2px;
+      border: 1px solid #2c3e50;
+      border-radius: 50%;
+      text-align: center;
+      cursor: pointer;
+    }
   }
 }

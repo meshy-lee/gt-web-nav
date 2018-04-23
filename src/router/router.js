@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Router, Route, IndexRedirect, hashHistory, IndexRoute} from 'react-router'
+import {Router, Route, IndexRedirect, browserHistory, IndexRoute} from 'react-router'
 // import Box from './router_component/box'
 import {connect} from 'react-redux'
 import App from './../App'
@@ -18,15 +18,14 @@ const NotFound = (location, cb) => {
     cb(null, require('./../page/not_found/index').default)
   }, 'NotFound')
 }
-console.log(BusinessLineIndex)
 class PageRouter extends Component {
   render () {
-    const init = this.props.init
+    // const init = this.props.init
     return (
-      <Router history={hashHistory}>
+      <Router history={browserHistory}>
         <Route name='App' path="/" component={App}>
           <IndexRedirect to="bussinessLine" />
-          <Route name='bussinessLine' path="bussinessLine" getComponent={BusinessLineIndex}>
+          <Route name='bussinessLine' path="/bussinessLine" getComponent={BusinessLineIndex}>
             <Route name='dashboard' path="/bussinessLine/:id/dashboard" getComponent={Dashboard}>
             </Route>
           </Route>
@@ -36,12 +35,12 @@ class PageRouter extends Component {
     )
   }
 }
-function mapDispatchToProps (dispatch, ownProps) {
-  return {
-    // init: (flag) => {
-    //   dispatch(action.getData())
-    // }
-  }
-}
+// function mapDispatchToProps (dispatch, ownProps) {
+//   return {
+//     // init: (flag) => {
+//     //   dispatch(action.getData())
+//     // }
+//   }
+// }
 
-export default connect(null, mapDispatchToProps)(PageRouter)
+export default connect(null, null)(PageRouter)

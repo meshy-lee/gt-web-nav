@@ -4,7 +4,6 @@ import MenuPanel from '@/components/menu/views/menu_panel'
 
 class BusinessLineIndex extends Component {
   render (children) {
-    console.log(children)
     return (
       <div>
         <Topbar/>
@@ -16,15 +15,4 @@ class BusinessLineIndex extends Component {
     )
   }
 }
-// const BusinessLineIndex = (children) => {
-//   return (
-//     <div>
-//       <Topbar/>
-//       <MenuPanel/>
-//       <div id='home-container'>
-//         {children}
-//       </div>
-//     </div>
-//   )
-// }
 export default BusinessLineIndex

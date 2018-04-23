@@ -26,24 +26,6 @@ class BusinessMainModal extends Component {
     this._Add = this._Add.bind(this)
     this._Update = this._Update.bind(this)
   }
-  // selectedIcon (el, index) {
-  //   if (el.iconSelected) return false
-  //   const {form, fontsList} = this.state
-  //   fontsList.forEach((ele, ind) => {
-  //     ele.userSelected = !!(index === ind)
-  //   })
-  //   fontsList[index].userSelected = true
-  //   this.setState({
-  //     form: {
-  //       ...form,
-  //       imgUrl: {
-  //         value: el.iconClass,
-  //         validate: true
-  //       }
-  //     },
-  //     fontsList
-  //   })
-  // }
   validateBusinessLineName (ev) {
     const val = ev.target.value
     let pass = !!(val !== '' && val.length <= 6)
@@ -183,7 +165,7 @@ class BusinessMainModal extends Component {
               </div>
             </div>
             <div className="gt-form-group">
-              <label className="gt-form__label gt--required">业务线名称</label>
+              <label className="gt-form__label gt--required">业务线图标</label>
               <div className="gt-form__content">
                 <div className="gt-upload">
                   <label className="gt-upload__style gt-upload-img__cell" ref="imgWrap">

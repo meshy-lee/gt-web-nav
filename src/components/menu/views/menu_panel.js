@@ -5,7 +5,9 @@ import PropTypes from 'prop-types'
 import {ModalWrap} from './../../index'
 import BusinessMainModal from '@/page/business_line/businessMainModal'
 import * as actions from '@/store/actions'
+import {deleteBusinessLine} from '@/api/business_line'
 import './index.less'
+// import { browserHistory } from 'react-router'
 class MenuPanel extends Component {
   constructor () {
     super(...arguments)
@@ -15,9 +17,10 @@ class MenuPanel extends Component {
     this.increase = this.increase.bind(this)
     this.edit = this.edit.bind(this)
     this.deleted = this.deleted.bind(this)
+    // console.dir(browserHistory)
   }
   increase () {
-    ModalWrap({data: this.props.data, actionType: 'add'}, BusinessMainModal).then(() => {
+    this.$modalWrap({data: this.props.data, actionType: 'add'}, BusinessMainModal).then(() => {
       this.props.fetchBusinessLine()
     }, res => {
       console.log('cancel')
@@ -29,8 +32,23 @@ class MenuPanel extends Component {
       edit
     })
   }
-  deleted () {
-
+  deleted (target) {
+    this.$comfirm({
+      message: '确认删除该分组？'
+    }).then(res => {
+      deleteBusinessLine({id: target.id}).then(res => {
+        console.log(res)
+      }, errRes => {
+        console.log(res)
+      })
+    }, errRes => {
+      console.log(errRes)
+    })
+  }
+  update () {
+    this.$comfirm({
+      message: '确认删除该分组？'
+    })
   }
   render () {
     let menuClass = 'gt-bar'
@@ -38,12 +56,14 @@ class MenuPanel extends Component {
     if (this.props.status === 'success') menuClass = 'gt-bar gt-bar-in'
     if (this.state.edit) menuClass += ' bar-edit'
     // if (this.props.data.length)
-    // var btnClass = cl({
+    // var menuItem = cl({
     //   btn: true,
     //   'btn-pressed': this.state.isPressed,
     //   'btn-over': !this.state.isPressed && this.state.isHovered
     // })
+    // console.log(menuItem)
     // <div className="shake shake-horizontal shake-constant"></div>
+    // console.log(console.log(this.props))
     return (
       <div className={menuClass}>
         <div className='business-add-wrap'>
@@ -53,17 +73,19 @@ class MenuPanel extends Component {
           <ul className="gt-menu">
             {
               this.props.data.map((ele, index) => {
-                return (<li key={index}>
-                  <a href={'#bussinessLine/' + ele.id + '/dashboard'} className="gt-menu__hd">
-                    <div className="update-edit-wrap">
-                      <button className="update-btn" type='button'>更新</button>
-                    </div>
+                return (<li className="gt-menu-cell" key={index}>
+                  <a href={'/bussinessLine/' + ele.id + '/dashboard'} className="gt-menu__hd">
                     <img src={ele.url}/>
-                    <div className="delete-edit-wrap">
-                      <button className="delete-btn" type='button'>删除</button>
-                    </div>
                     <span className="gt-menu__txt">{ele.name}</span>
                   </a>
+                  <div className="control-box">
+                    <div className="update-edit-wrap">
+                      <button className="update-btn" type='button' onClick={this.update.bind(this)}>更新</button>
+                    </div>
+                    <div className="delete-edit-wrap">
+                      <button className="delete-btn" type='button' onClick={this.deleted.bind(this, ele)}>删除</button>
+                    </div>
+                  </div>
                 </li>)
               })
             }
@@ -77,7 +99,6 @@ class MenuPanel extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  // console.log(state.globalReducer)
   return {...state.globalReducer}
 }
 MenuPanel.propTypes = {
