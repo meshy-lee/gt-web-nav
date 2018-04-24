@@ -1,14 +1,55 @@
-.gt-menu-wrap {
-    width: 175px;
+.primary-menu-header {
+    text-align: center;
+    background: rgba(59, 92, 135, 0.5);
+    button {
+        width: 100%;
+        height: 40px;
+        background: none;
+        outline: none;
+        border: none;
+        color: #cccccc;
+        cursor: pointer;
+        .iconfont {
+            font-size: 14px;
+        }
+    }
 }
-
+.primary-menu-body {
+    // width: 175px;
+    width: 192px;
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    overflow-x: hidden;
+    .gt-menu {
+        padding: 0 0 94px 0;
+        overflow-y: auto;
+    }
+}
+.primary-menu-footer {
+    width: 175px;
+    height: 40px;
+    position: absolute;
+    left: 0;
+    bottom: 57px;
+    z-index: 10;
+    text-align: center;
+    background: #01acf3;
+    line-height: 40px;
+    cursor: pointer;
+    a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+}
 .gt-bar {
     width: 175px;
     position: fixed;
-    top: 65px;
+    top: 57px;
     left: -176px;
     bottom: 0;
-    transition: all 0.3s;
+    background: #142d51;
+    // transition: all 0.3s;
     strong {
         display: none;
     }
@@ -19,7 +60,7 @@
     .gt-menu__txt {
         padding-left: 14px;
     }
-    button {
+    .control-btn {
         outline: none;
         border: none;
         width: 176px;
@@ -33,10 +74,9 @@
         font-size: 18px;
         text-decoration: none;
     }
-    .gt-menu-cell{
-        height: 70px;
+    .gt-menu-cell {
         position: relative;
-        &:hover{
+        &:hover {
             .update-edit-wrap,
             .delete-edit-wrap {
                 width: 50%;
@@ -49,11 +89,18 @@
     }
     .gt-menu__hd {
         display: block;
+        color: #8297b3;
         img {
             width: 24px;
             height: 24px;
             vertical-align: middle;
         }
+        &:hover{
+            color: #ffffff;
+        }
+    }
+    .gt-menu__hd.active {
+        color: #ffffff;
     }
 }
 
@@ -78,14 +125,15 @@
         opacity: 0;
         display: none;
     }
-    .control-box{
+    .control-box {
         display: block;
     }
 }
-.control-box{
+
+.control-box {
     display: none;
     width: 100%;
-    height: 100%;
+    height: 70px;
     position: absolute;
     top: 0;
     cursor: pointer;
@@ -94,7 +142,7 @@
         .update-btn {
             left: -176px;
             background: #f89e35;
-            &:hover{
+            &:hover {
                 left: 0;
             }
         }
@@ -112,7 +160,7 @@
         .delete-btn {
             right: -176px;
             background: #f16464;
-            &:hover{
+            &:hover {
                 right: 0;
             }
         }
@@ -125,6 +173,7 @@
         }
     }
 }
+
 .gt-bar-in {
     left: 0;
 }

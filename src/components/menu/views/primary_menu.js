@@ -6,9 +6,10 @@ import {ModalWrap} from './../../index'
 import BusinessMainModal from '@/page/business_line/businessMainModal'
 import * as actions from '@/store/actions'
 import {deleteBusinessLine} from '@/api/business_line'
+
 import './index.less'
 // import { browserHistory } from 'react-router'
-class MenuPanel extends Component {
+class PrimaryMenu extends Component {
   constructor () {
     super(...arguments)
     this.state = {
@@ -34,9 +35,14 @@ class MenuPanel extends Component {
   }
   deleted (target) {
     this.$comfirm({
-      message: '确认删除该分组？'
+      message: `确认删除${target.name}？`
     }).then(res => {
       deleteBusinessLine({id: target.id}).then(res => {
+        this.$toast({
+          type: 'success',
+          message: res.msg || '删除成功!'
+        })
+        this.props.fetchBusinessLine()
         console.log(res)
       }, errRes => {
         console.log(res)
@@ -45,9 +51,11 @@ class MenuPanel extends Component {
       console.log(errRes)
     })
   }
-  update () {
-    this.$comfirm({
-      message: '确认删除该分组？'
+  update (target) {
+    this.$modalWrap({data: target, actionType: 'update'}, BusinessMainModal).then(() => {
+      this.props.fetchBusinessLine()
+    }, res => {
+      console.log('cancel')
     })
   }
   render () {
@@ -66,10 +74,12 @@ class MenuPanel extends Component {
     // console.log(console.log(this.props))
     return (
       <div className={menuClass}>
-        <div className='business-add-wrap'>
-          <a className="gt-btn-line gt--large gt--primary" onClick={this.increase}><i className="gt-icon icon-add"></i></a>
+        <div className="primary-menu-header">
+          <button type="button" onClick={this.increase}>
+            <i className="gt-icon icon-add"></i>
+          </button>
         </div>
-        <div className="gt-menu-wrap">
+        <div className="primary-menu-body">
           <ul className="gt-menu">
             {
               this.props.data.map((ele, index) => {
@@ -80,10 +90,10 @@ class MenuPanel extends Component {
                   </a>
                   <div className="control-box">
                     <div className="update-edit-wrap">
-                      <button className="update-btn" type='button' onClick={this.update.bind(this)}>更新</button>
+                      <button className="control-btn update-btn" type='button' onClick={this.update.bind(this, ele)}>更新</button>
                     </div>
                     <div className="delete-edit-wrap">
-                      <button className="delete-btn" type='button' onClick={this.deleted.bind(this, ele)}>删除</button>
+                      <button className="control-btn delete-btn" type='button' onClick={this.deleted.bind(this, ele)}>删除</button>
                     </div>
                   </div>
                 </li>)
@@ -91,9 +101,9 @@ class MenuPanel extends Component {
             }
           </ul>
         </div>
-        <div className="menu-edit" onClick={this.edit}>
+        <footer className="primary-menu-footer" onClick={this.edit}>
           <a href="javaScript:;">编辑</a>
-        </div>
+        </footer>
       </div>
     )
   }
@@ -101,7 +111,7 @@ class MenuPanel extends Component {
 const mapStateToProps = (state) => {
   return {...state.globalReducer}
 }
-MenuPanel.propTypes = {
+PrimaryMenu.propTypes = {
   fetchBusinessLine: PropTypes.func.isRequired
 }
 const mapDispatchToProps = (dispatch) => {
@@ -111,9 +121,9 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-// MenuPanel.propTypes = {
+// PrimaryMenu.propTypes = {
 //   status: PropTypes.string.isRequired,
 //   cityName: PropTypes.string
 // }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(PrimaryMenu)

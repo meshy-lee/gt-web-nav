@@ -1,0 +1,108 @@
+.common-top-bar-box {
+    a:visited,
+    a:link,
+    a {
+        color: #ffffff;
+    }
+    .iconfont {
+        color: #ffffff;
+    }
+    min-width: 800px; //这个属性会截断右侧的菜单；BUT有利有弊；
+    height: 57px;
+    font-size: 13px;
+    line-height: 1;
+    color: #ffffff;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 10000;
+    transform: translateZ(0);
+    transition:height .3s;
+    .wrapper {
+        width: 100%;
+        height: 57px;
+        background-color: #01ACF3;
+        .top-bar-wrap {
+            height: 100%;
+            .gt-logo {
+                float: left;
+                position: relative;
+                width: 58px;
+                height: 57px;
+                background: url(https://dev.getui.com/top_bar_common_img/top_bar_small_logo.png) no-repeat center;
+                background-size: 37px 34px;
+                overflow: hidden;
+            }
+            .gt-top-bar-title {
+                margin: 0 20px;
+                float: left;
+                font-size: 22px;
+                line-height: 57px;
+            }
+            .iconfont {
+                font-size: 20px;
+                vertical-align: top;
+                position: absolute;
+                &.icon-menu_icon_close {
+                    font-size: 24px;
+                }
+            }
+        }
+        .iconfont {
+            line-height: 57px;
+        }
+    }
+    .tab-menu-btn {
+        margin-left: 20px;
+    }
+    .topbar-system-name {
+        height: 100%;
+        margin-left: 20px;
+        line-height: 57px;
+        font-weight: normal;
+        font-size: 15px;
+    }
+}
+
+.top-bar-unit-box {
+    height: 100%;
+    float: left;
+    position: relative;
+    cursor: pointer;
+    border-right: 1px solid #3ac4fd;
+    &:after {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        background: #008fcb;
+    }
+    .wrap-mask {
+        //display: none;
+        visibility: hidden;
+        width : calc(~"100% - 2px");
+        height: 100%;
+        background: rgba(0, 0, 0, .25);
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 2;
+    }
+    .link-wrap {
+        z-index: 3;
+        * {
+            position: relative;
+            z-index: 3;
+        }
+    }
+    &:hover {
+        .wrap-mask {
+            visibility: visible;
+            display: block;
+        }
+    }
+}

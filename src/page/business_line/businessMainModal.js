@@ -6,7 +6,8 @@ import {uploadImg} from '@/api/common'
 class BusinessMainModal extends Component {
   constructor () {
     super(...arguments)
-    this.state = {
+    console.log(this.props)
+    const initState = {
       form: {
         businessLineName: {
           value: '',
@@ -17,8 +18,21 @@ class BusinessMainModal extends Component {
           validate: false
         }
       },
-      imgName: ''
+      imgName: '',
+      id: ''
     }
+    if (this.props.actionType === 'update') {
+      let propsData = this.props.data
+      initState.form.businessLineName.value = propsData.name
+      initState.form.imgUrl = {
+        value: propsData.url,
+        validate: true
+      }
+      initState.id = propsData.id
+      initState.imgName = propsData.url
+    }
+    console.log(initState)
+    this.state = initState
     this.validateBusinessLineName = this.validateBusinessLineName.bind(this)
     this.validate = this.validate.bind(this)
     this.setItemValidate = this.setItemValidate.bind(this)
@@ -31,6 +45,11 @@ class BusinessMainModal extends Component {
     let pass = !!(val !== '' && val.length <= 6)
     this.setItemValidate(val, 'businessLineName', pass)
   }
+  // handleChange (ev) {
+  //   const val = ev.target.value
+  //   let pass = !!(val !== '' && val.length <= 6)
+  //   this.setItemValidate(val, 'businessLineName', pass)
+  // }
   setItemValidate (value, attr, bol) {
     const {form} = this.state
     this.setState({
@@ -97,11 +116,17 @@ class BusinessMainModal extends Component {
   validate () {
     let {businessLineName, imgUrl} = this.state.form
     if (businessLineName.validate && imgUrl.validate) {
-      const url = JSON.stringify({
+      const params = {
         businessLineName: businessLineName.value,
         imgUrl: imgUrl.value
-      })
-      this._Add({body: url})
+      }
+      let url = JSON.stringify()
+      if (this.props.actionType === 'update') {
+        params.id = this.props.data.id
+        this._Update({body: JSON.stringify(params)})
+      } else {
+        this._Add({body: JSON.stringify(params)})
+      }
     } else {
       this.$toast({
         type: 'error',
@@ -115,6 +140,7 @@ class BusinessMainModal extends Component {
   _Add (params) {
     console.log(params)
     addBusinessLine(params).then(res => {
+      console.log(res)
       this.$toast({
         type: 'success',
         message: res.msg || '添加成功!'
@@ -122,21 +148,14 @@ class BusinessMainModal extends Component {
       this.props.comfirm()
     })
   }
-  _Update () {
-    updateBusinessLine().then(res => {
-      console.log(res)
-      res.json().then((responseJson) => {
-        console.log(responseJson)
-        this.$toast({
-          type: 'success',
-          message: responseJson.msg || '添加成功!'
-        })
-        // this.props.dispatch(actions.fetchBusinessLine())
-        this.props.comfirm()
-        // dispatch(fetchMenuSuccess(responseJson.data))
-      }).catch((error) => {
-        // dispatch(fetchMenuFailure())
+  _Update (parmas) {
+    updateBusinessLine(parmas).then(res => {
+      this.$toast({
+        type: 'success',
+        message: res.msg || '修改成功!'
       })
+      // this.props.dispatch(actions.fetchBusinessLine())
+      this.props.comfirm()
     })
   }
   render () {
@@ -161,7 +180,7 @@ class BusinessMainModal extends Component {
             <div className="gt-form-group">
               <label className="gt-form__label gt--required">业务线名称</label>
               <div className="gt-form__content">
-                <input className={form.businessLineName.validate ? 'gt-form-control' : 'gt-form-control gt--error'} onBlur={this.validateBusinessLineName} type="text" name="businessLineName"/>
+                <input value={this.state.form.businessLineName.value} onChange={this.validateBusinessLineName} className={form.businessLineName.validate ? 'gt-form-control' : 'gt-form-control gt--error'} onBlur={this.validateBusinessLineName} type="text" name="businessLineName"/>
               </div>
             </div>
             <div className="gt-form-group">
@@ -190,6 +209,15 @@ class BusinessMainModal extends Component {
         </div>
       </div>
     )
+  }
+  componentDidMount () {
+    let propsData = this.props.data
+    if (this.props.actionType === 'update') {
+      let image = new Image()
+      image.src = propsData.url
+      image.className = 'gt-upload-img'
+      this.refs.imgWrap.append(image)
+    }
   }
 }
 export default BusinessMainModal

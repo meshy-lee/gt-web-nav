@@ -1,23 +1,7 @@
-/* 顶部栏 */
-
-.gt-header {
-    .gt-logo {
-        max-height: 44px;
-    }
-    .gt-topbar-title{
-        height: 65px;
-        line-height: 65px;
-        color: #ffffff;
-        text-indent: 60px;
-        font-size: 20px;
-        font-weight: normal;
-    }
+#root {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-
-
-/* 顶部栏 end */
-
-
 /* Loading */
 
 .loader {
@@ -30,144 +14,13 @@
     transform: translate(-50%, -50%);
 }
 
-@-webkit-keyframes ball-spin-fade-loader {
-    50% {
-        opacity: 0.3;
-        -webkit-transform: scale(0.4);
-        transform: scale(0.4);
-    }
-    100% {
-        opacity: 1;
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
-}
-
-@keyframes ball-spin-fade-loader {
-    50% {
-        opacity: 0.3;
-        -webkit-transform: scale(0.4);
-        transform: scale(0.4);
-    }
-    100% {
-        opacity: 1;
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
-}
-
-.ball-spin-fade-loader {
-    height: 100px;
-    position: relative;
-    top: 42px;
-    left: 42px;
-}
-
-.ball-spin-fade-loader>div:nth-child(1) {
-    top: 25px;
-    left: 0;
-    -webkit-animation: ball-spin-fade-loader 1s 0s infinite linear;
-    animation: ball-spin-fade-loader 1s 0s infinite linear;
-}
-
-.ball-spin-fade-loader>div:nth-child(2) {
-    top: 17.04545px;
-    left: 17.04545px;
-    -webkit-animation: ball-spin-fade-loader 1s 0.12s infinite linear;
-    animation: ball-spin-fade-loader 1s 0.12s infinite linear;
-}
-
-.ball-spin-fade-loader>div:nth-child(3) {
-    top: 0;
-    left: 25px;
-    -webkit-animation: ball-spin-fade-loader 1s 0.24s infinite linear;
-    animation: ball-spin-fade-loader 1s 0.24s infinite linear;
-}
-
-.ball-spin-fade-loader>div:nth-child(4) {
-    top: -17.04545px;
-    left: 17.04545px;
-    -webkit-animation: ball-spin-fade-loader 1s 0.36s infinite linear;
-    animation: ball-spin-fade-loader 1s 0.36s infinite linear;
-}
-
-.ball-spin-fade-loader>div:nth-child(5) {
-    top: -25px;
-    left: 0;
-    -webkit-animation: ball-spin-fade-loader 1s 0.48s infinite linear;
-    animation: ball-spin-fade-loader 1s 0.48s infinite linear;
-}
-
-.ball-spin-fade-loader>div:nth-child(6) {
-    top: -17.04545px;
-    left: -17.04545px;
-    -webkit-animation: ball-spin-fade-loader 1s 0.6s infinite linear;
-    animation: ball-spin-fade-loader 1s 0.6s infinite linear;
-}
-
-.ball-spin-fade-loader>div:nth-child(7) {
-    top: 0;
-    left: -25px;
-    -webkit-animation: ball-spin-fade-loader 1s 0.72s infinite linear;
-    animation: ball-spin-fade-loader 1s 0.72s infinite linear;
-}
-
-.ball-spin-fade-loader>div:nth-child(8) {
-    top: 17.04545px;
-    left: -17.04545px;
-    -webkit-animation: ball-spin-fade-loader 1s 0.84s infinite linear;
-    animation: ball-spin-fade-loader 1s 0.84s infinite linear;
-}
-
-.ball-spin-fade-loader>div {
-    background-color: #01acf3;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-    margin: 2px;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-    position: absolute;
-}
-
-
 /* Loading end */
-
-/* menu */
-.business-add-wrap{
-    margin: 20px 0;
-    text-align: center;
-}
-.menu-edit{
-    width: 175px;
-    height: 40px;
-    position: absolute;
-    left: 0;
-    // left: 50%;
-    bottom: 65px;
-    text-align: center;
-    background: #01acf3;
-    
-    line-height: 40px;
-
-    cursor: pointer;
-    a{
-        color: #ffffff;
-        text-decoration: none;
-    }
-}
-.shake{
-    height: 20px;
-    width: 100px;
-    background: red;
-}
-/* menu */
 
 /* modal */
 .modal-in{
     overflow: hidden;
 }
-.modal-root{
+.modal-root {
     position: fixed;
     left: 0;
     right: 0;

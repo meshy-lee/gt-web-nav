@@ -34,6 +34,7 @@ function Toast (opts = {}) {
       break
   }
   const oDiv = document.createElement('div')
+  oDiv.className = 'modal-root'
   const oBody = document.getElementsByTagName('body')[0]
   let timer = null
   const remove = () => {
