@@ -8,20 +8,30 @@ import * as actions from '@/store/actions'
 import {deleteBusinessLine} from '@/api/business_line'
 
 import './index.less'
-// import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 class PrimaryMenu extends Component {
   constructor () {
     super(...arguments)
     this.state = {
       edit: false
     }
+    this.componentAttr = {}
+    // this.initRouteInfo = this.initRouteInfo.bind(this)
     this.increase = this.increase.bind(this)
     this.edit = this.edit.bind(this)
     this.deleted = this.deleted.bind(this)
-    // console.dir(browserHistory)
+    // this.componentAttr.currentId =
+    this.initRouteInfo.apply(this)
+  }
+  initRouteInfo () {
+    // console.dir(browserHistory.getCurrentLocation().pathname.split('/'))
+    const routeInfo = browserHistory.getCurrentLocation().pathname.split('/')
+    if (routeInfo.length > 2) {
+      this.componentAttr.currentId = Number(routeInfo[2])
+    }
   }
   increase () {
-    this.$modalWrap({data: this.props.data, actionType: 'add'}, BusinessMainModal).then(() => {
+    this.$modalWrap({data: this.props.data, action: 'add'}, BusinessMainModal).then(() => {
       this.props.fetchBusinessLine()
     }, res => {
       console.log('cancel')
@@ -45,14 +55,14 @@ class PrimaryMenu extends Component {
         this.props.fetchBusinessLine()
         console.log(res)
       }, errRes => {
-        console.log(res)
+
       })
     }, errRes => {
-      console.log(errRes)
+
     })
   }
   update (target) {
-    this.$modalWrap({data: target, actionType: 'update'}, BusinessMainModal).then(() => {
+    this.$modalWrap({data: target, action: 'update'}, BusinessMainModal).then(() => {
       this.props.fetchBusinessLine()
     }, res => {
       console.log('cancel')
@@ -60,18 +70,8 @@ class PrimaryMenu extends Component {
   }
   render () {
     let menuClass = 'gt-bar'
-    // console.log(this.props.status)
     if (this.props.status === 'success') menuClass = 'gt-bar gt-bar-in'
     if (this.state.edit) menuClass += ' bar-edit'
-    // if (this.props.data.length)
-    // var menuItem = cl({
-    //   btn: true,
-    //   'btn-pressed': this.state.isPressed,
-    //   'btn-over': !this.state.isPressed && this.state.isHovered
-    // })
-    // console.log(menuItem)
-    // <div className="shake shake-horizontal shake-constant"></div>
-    // console.log(console.log(this.props))
     return (
       <div className={menuClass}>
         <div className="primary-menu-header">
@@ -83,7 +83,11 @@ class PrimaryMenu extends Component {
           <ul className="gt-menu">
             {
               this.props.data.map((ele, index) => {
-                return (<li className="gt-menu-cell" key={index}>
+                let menuItem = cl({
+                  'gt-menu-cell': true,
+                  'active': ele.id === this.componentAttr.currentId
+                })
+                return (<li className={menuItem} key={index}>
                   <a href={'/bussinessLine/' + ele.id + '/dashboard'} className="gt-menu__hd">
                     <img src={ele.url}/>
                     <span className="gt-menu__txt">{ele.name}</span>

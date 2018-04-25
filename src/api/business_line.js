@@ -1,5 +1,5 @@
 import xhr from './inteceptor'
-const getBusinessLineList = (params = {}) => {
+const queryBusinessLineList = (params = {}) => {
   return xhr('/apiService/business/query', params)
 }
 const addBusinessLine = params => {
@@ -27,7 +27,7 @@ const deleteBusinessLine = params => {
   return xhr(url, params)
 }
 export {
-  getBusinessLineList,
+  queryBusinessLineList,
   addBusinessLine,
   updateBusinessLine,
   deleteBusinessLine

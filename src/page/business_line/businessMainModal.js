@@ -6,7 +6,6 @@ import {uploadImg} from '@/api/common'
 class BusinessMainModal extends Component {
   constructor () {
     super(...arguments)
-    console.log(this.props)
     const initState = {
       form: {
         businessLineName: {
@@ -21,7 +20,7 @@ class BusinessMainModal extends Component {
       imgName: '',
       id: ''
     }
-    if (this.props.actionType === 'update') {
+    if (this.props.action === 'update') {
       let propsData = this.props.data
       initState.form.businessLineName.value = propsData.name
       initState.form.imgUrl = {
@@ -31,7 +30,7 @@ class BusinessMainModal extends Component {
       initState.id = propsData.id
       initState.imgName = propsData.url
     }
-    console.log(initState)
+    // console.log(initState)
     this.state = initState
     this.validateBusinessLineName = this.validateBusinessLineName.bind(this)
     this.validate = this.validate.bind(this)
@@ -121,7 +120,7 @@ class BusinessMainModal extends Component {
         imgUrl: imgUrl.value
       }
       let url = JSON.stringify()
-      if (this.props.actionType === 'update') {
+      if (this.props.action === 'update') {
         params.id = this.props.data.id
         this._Update({body: JSON.stringify(params)})
       } else {
@@ -138,9 +137,7 @@ class BusinessMainModal extends Component {
     return uploadImg(params)
   }
   _Add (params) {
-    console.log(params)
     addBusinessLine(params).then(res => {
-      console.log(res)
       this.$toast({
         type: 'success',
         message: res.msg || '添加成功!'
@@ -212,7 +209,7 @@ class BusinessMainModal extends Component {
   }
   componentDidMount () {
     let propsData = this.props.data
-    if (this.props.actionType === 'update') {
+    if (this.props.action === 'update') {
       let image = new Image()
       image.src = propsData.url
       image.className = 'gt-upload-img'
