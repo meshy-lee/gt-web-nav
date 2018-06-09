@@ -2,7 +2,7 @@ import xhr from './inteceptor'
 const queryWebsiteList = (params = {}) => {
   console.log(params)
   params.method = 'GET'
-  const url = `/apiService/website/query?id=${params.id}`
+  const url = `/apiService/website/query?belong=${params.belong}`
   return xhr(url, params)
 }
 const addWebsite = params => {

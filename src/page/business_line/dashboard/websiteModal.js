@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+/* eslint-disable no-useless-escape */
 import React, {Component} from 'react'
 import cl from 'classnames'
 import './index.less'
@@ -9,46 +10,50 @@ class WebsiteModal extends Component {
   constructor () {
     super(...arguments)
     // console.log(this)
-    const formData = {
-      dirty: false,
-      name: '',
-      type: 0,
-      imgUrl: '',
-      group: this.props.data.id,
+    const form = {
+      name: {
+        value: '',
+        validate: true
+      },
+      url: {
+        value: '',
+        validate: true
+      },
+      imgUrl: {
+        value: '',
+        validate: false
+      },
+      type: 0, // 线网、测试网、准现网
+      belong: Number(this.props.data.id), // 父级
       accountList: [{
         userName: '',
         psw: ''
       }]
     }
     this.state = {
-      form: formData,
-      imgName: '',
-      typeOpts: [{
-        value: 0,
-        label: '线网'
-      }, {
-        value: 1,
-        label: '准线网'
-      }, {
-        value: 2,
-        label: '测试网'
-      }]
+      form,
+      imgName: ''
     }
     this.increaseUser = this.increaseUser.bind(this)
     this.autoSetState = this.autoSetState.bind(this)
     this.handleChangeName = this.handleChangeName.bind(this)
+    this.handleChangeUrl = this.handleChangeUrl.bind(this)
     this.uploadImg = this.uploadImg.bind(this)
     this.validate = this.validate.bind(this)
   }
   validate () {
-    let {name, imgUrl} = this.state.form
-    if (name && imgUrl) {
+    let {name, url, imgUrl, type, belong, accountList} = this.state.form
+    if (name.value && name.validate && url.value && url.validate && imgUrl.value) {
       const params = {
-        ...this.state.form
+        name: name.value,
+        url: url.value,
+        imgUrl: imgUrl.value,
+        belong,
+        type,
+        accountList
       }
-      delete params.dirty
       if (this.props.action === 'update') {
-        params.id = this.props.data.id
+        params.belong = this.props.data.id
         this._Update({body: JSON.stringify(params)})
       } else {
         console.log(params)
@@ -62,7 +67,15 @@ class WebsiteModal extends Component {
     }
   }
   _Update () {}
-  _Add () {}
+  _Add (params) {
+    addWebsite(params).then(res => {
+      this.$toast({
+        type: 'success',
+        message: res.msg || '添加成功!'
+      })
+      this.props.comfirm()
+    })
+  }
   increaseUser () {
     if (this.state.form.accountList.length >= 5) {
       this.$toast({
@@ -71,22 +84,20 @@ class WebsiteModal extends Component {
       })
       return
     }
-    const {form, imgName, typeOpts} = this.state
+    const {form, imgName} = this.state
     // console.log([...form.accountList, {userName: '', psw: ''}])
     this.setState({
       form: {...form, accountList: [...form.accountList, {userName: '', psw: ''}]},
-      imgName,
-      typeOpts
+      imgName
     })
   }
   decreaseUse (index) {
-    const {form, imgName, typeOpts} = this.state
+    const {form, imgName} = this.state
     const copy = [...form.accountList]
     copy.splice(index, 1)
     this.setState({
       form: {...form, accountList: [...copy]},
-      imgName,
-      typeOpts
+      imgName
     })
   }
   uploadImg (e) {
@@ -120,7 +131,7 @@ class WebsiteModal extends Component {
           type: 'success',
           message: '上传成功!'
         })
-        this.autoSetState('imgUrl', res.url)
+        this.autoSetState('imgUrl', res.url, true)
       }
       let reader = new FileReader()
       reader.readAsDataURL(target)
@@ -142,36 +153,65 @@ class WebsiteModal extends Component {
     return uploadImg(params)
   }
   handleChangeName (ev) {
-    this.autoSetState('name', Number(ev.target.value))
+    const val = ev.target.value
+    let pass = !!(val !== '')
+    this.autoSetState('name', ev.target.value, pass)
+  }
+  handleChangeUrl (ev) {
+    const val = ev.target.value
+    const reg = /(www|http:|https:)+[^\s]+[\w]/
+    let pass = !!(val !== '' && reg.test(val))
+    this.autoSetState('url', ev.target.value, pass)
   }
   hanleChangeType (ev) {
-    this.autoSetState('type', Number(ev.target.value))
+    const {form, imgName} = this.state
+    this.setState({
+      form: {
+        ...form,
+        type: Number(ev.target.value)
+      },
+      imgName
+    })
   }
   handleChangeAccoutName (index, ev) {
     const {accountList} = this.state.form
     const target = accountList.filter((ele, ind) => ind === index)[0]
     target.userName = ev.target.value
-    this.autoSetState('accountList', [...accountList])
-    // console.log(index, ev.target.value)
+    const {form, imgName} = this.state
+    this.setState({
+      form: {
+        ...form,
+        accountList
+      },
+      imgName
+    })
+    // this.autoSetState('accountList', [...accountList])
   }
   handleChangePassword (index, ev) {
     const {accountList} = this.state.form
     const target = accountList.filter((ele, ind) => ind === index)[0]
     target.psw = ev.target.value
-    this.autoSetState('accountList', [...accountList])
-  }
-  autoSetState (key, value) {
-    const {form, typeOpts, imgName} = this.state
+    const {form, imgName} = this.state
     this.setState({
       form: {
         ...form,
-        dirty: (key === 'name' || form.dirty),
-        [key]: value
+        accountList
       },
-      imgName,
-      ...typeOpts
+      imgName
     })
-    console.log(this.state)
+  }
+  autoSetState (key, value, pass) {
+    const {form, imgName} = this.state
+    this.setState({
+      form: {
+        ...form,
+        [key]: {
+          value,
+          validate: pass
+        }
+      },
+      imgName
+    })
   }
   componentDidMount () {
     let propsData = this.props.data
@@ -183,8 +223,17 @@ class WebsiteModal extends Component {
     }
   }
   render () {
-    const {form, imgName, typeOpts} = this.state
-    console.log(form.accountList)
+    const {form, imgName} = this.state
+    const typeOpts = [{
+      value: 0,
+      label: '线网'
+    }, {
+      value: 1,
+      label: '准线网'
+    }, {
+      value: 2,
+      label: '测试网'
+    }]
     let uploadSuccessTip = null
     if (imgName) {
       uploadSuccessTip = <div className="gt-upload-result__cell gt--success">
@@ -206,12 +255,23 @@ class WebsiteModal extends Component {
               <label className="gt-form__label gt--required">网站名称</label>
               <div className="gt-form__content">
                 <input
+                  maxLength="12"
                   defaultValue=''
-                  className={cl({'gt-form-control': true, 'gt--error': !form.name && form.dirty})}
+                  className={cl({'gt-form-control': true, 'gt--error': !form.name.validate})}
                   type="text"
                   name="websiteName"
-                  onBlur={this.handleChangeName}
-                  onChange={this.handleChangeName}/>
+                  onBlur={this.handleChangeName}/>
+              </div>
+            </div>
+            <div className="gt-form-group">
+              <label className="gt-form__label gt--required">网站链接</label>
+              <div className="gt-form__content">
+                <input
+                  maxLength="100"
+                  className={cl({'gt-form-control': true, 'gt--error': !form.url.validate})}
+                  type="url"
+                  name="websiteName"
+                  onBlur={this.handleChangeUrl}/>
               </div>
             </div>
             <div className="gt-form-group">
@@ -220,7 +280,12 @@ class WebsiteModal extends Component {
                 {
                   typeOpts.map(ele => {
                     return <label className="gt-checkbox" key={ele.value}>
-                      <input value={ele.value} type="radio" name="websiteType" checked={form.type === ele.value} onChange={this.hanleChangeType.bind(this)}/>
+                      <input
+                        value={ele.value}
+                        type="radio"
+                        name="websiteType"
+                        checked={form.type === ele.value}
+                        onChange={this.hanleChangeType.bind(this)}/>
                       <span className="gt-radio__style"></span>
                       <span className="gt-radio__txt">{ele.label}</span>
                     </label>
@@ -254,11 +319,21 @@ class WebsiteModal extends Component {
                     return <div className="gt-form-input-btn gt-input--ws" key={index}>
                       <div className="fl">
                         <label className="gt-form__label">账号</label>
-                        <input className="gt-form-control" type="text" name="websiteAccount" onChange={this.handleChangeAccoutName.bind(this, index)}/>
+                        <input
+                          maxLength="20"
+                          className="gt-form-control"
+                          type="text"
+                          name="websiteAccount"
+                          onChange={this.handleChangeAccoutName.bind(this, index)}/>
                       </div>
                       <div className="fl">
                         <label className="gt-form__label">密码</label>
-                        <input className="gt-form-control" type="text" name="websitePassword" onChange={this.handleChangePassword.bind(this, index)}/>
+                        <input
+                          maxLength="36"
+                          className="gt-form-control"
+                          type="text"
+                          name="websitePassword"
+                          onChange={this.handleChangePassword.bind(this, index)}/>
                         <i className="gt-icon icon-add" onClick={this.increaseUser}></i>
                         {index !== 0 ? <i className="gt-icon icon-cross-fat" onClick={this.decreaseUse.bind(this, index)}></i> : ''}
                       </div>

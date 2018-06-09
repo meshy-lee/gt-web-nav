@@ -10,6 +10,11 @@ import './index.less'
 class DashboardIndex extends Component {
   constructor () {
     super()
+    this.state = {
+      onlineList: [],
+      preOnlineList: [],
+      testOnlineList: []
+    }
     this.addWebsite = this.addWebsite.bind(this)
   }
   addWebsite () {
@@ -20,6 +25,7 @@ class DashboardIndex extends Component {
     })
   }
   render () {
+    const {onlineList, preOnlineList, testOnlineList} = this.state
     return (
       <div id='dashboard-container'>
         <div className='unit-group'>
@@ -31,9 +37,9 @@ class DashboardIndex extends Component {
             </h3>
           </div>
           <div className='unit-body'>
-            <Online/>
-            <PreOnline/>
-            <TestOnline/>
+            <Online onlineList={onlineList}/>
+            <PreOnline preOnlineList={preOnlineList}/>
+            <TestOnline testOnlineList={testOnlineList}/>
           </div>
         </div>
       </div>
@@ -41,8 +47,18 @@ class DashboardIndex extends Component {
   }
   componentDidMount () {
     // console.log(this.props.params.id)
-    queryWebsiteList({id: this.props.params.id}).then(res => {
-      // console.log(res)
+    queryWebsiteList({belong: this.props.params.id}).then(res => {
+      const resData = res.data
+      console.log(res.data)
+      res.data.forEach(ele => {
+        ele.accountList = JSON.parse(ele.accountList)
+      })
+      this.setState({
+        onlineList: resData.filter(ele => ele.type === 0),
+        preOnlineList: resData.filter(ele => ele.type === 1),
+        testOnlineList: resData.filter(ele => ele.type === 2)
+      })
+      // console.log(this.state)
     }, errRes => {
 
     })

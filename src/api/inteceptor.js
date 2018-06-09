@@ -24,7 +24,7 @@ const xhr = (url, params) => {
           } else {
             React.$toast({
               type: 'error',
-              message: responseJson.errInfo
+              message: responseJson.errInfo || responseJson.msg
             })
           }
         }).catch(errRes => {
