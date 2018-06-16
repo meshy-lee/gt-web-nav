@@ -1,6 +1,5 @@
 import xhr from './inteceptor'
 const queryWebsiteList = (params = {}) => {
-  console.log(params)
   params.method = 'GET'
   const url = `/apiService/website/query?belong=${params.belong}`
   return xhr(url, params)
@@ -13,6 +12,10 @@ const addWebsite = params => {
   return xhr('/apiService/website/add', params)
 }
 const updateWebsite = params => {
+  params.method = 'PUT'
+  params.headers = {
+    'Content-Type': 'application/json'
+  }
   return xhr('/apiService/website/update', params)
 }
 const deleteWebsite = params => {

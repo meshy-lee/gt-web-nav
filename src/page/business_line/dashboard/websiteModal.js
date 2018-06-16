@@ -9,7 +9,6 @@ import {uploadImg} from '@/api/common'
 class WebsiteModal extends Component {
   constructor () {
     super(...arguments)
-    // console.log(this)
     const form = {
       name: {
         value: '',
@@ -24,11 +23,24 @@ class WebsiteModal extends Component {
         validate: false
       },
       type: 0, // 线网、测试网、准现网
-      belong: Number(this.props.data.id), // 父级
+      belong: Number(this.props.data.belong), // 父级
       accountList: [{
         userName: '',
         psw: ''
       }]
+    }
+    if (this.props.action === 'update') {
+      let propsData = {...this.props.data}
+      form.name.value = propsData.name
+      form.url.value = propsData.url
+      form.type = propsData.type
+      form.accountList = propsData.accountList
+      form.imgUrl = {
+        value: propsData.img,
+        validate: true
+      }
+      form.id = propsData.id
+      form.imgName = propsData.url
     }
     this.state = {
       form,
@@ -53,7 +65,8 @@ class WebsiteModal extends Component {
         accountList
       }
       if (this.props.action === 'update') {
-        params.belong = this.props.data.id
+        params.id = this.props.data.id
+        console.log(params)
         this._Update({body: JSON.stringify(params)})
       } else {
         console.log(params)
@@ -66,7 +79,15 @@ class WebsiteModal extends Component {
       })
     }
   }
-  _Update () {}
+  _Update (params) {
+    updateWebsite(params).then(res => {
+      this.$toast({
+        type: 'success',
+        message: res.msg || '更新成功!'
+      })
+      this.props.comfirm()
+    })
+  }
   _Add (params) {
     addWebsite(params).then(res => {
       this.$toast({
@@ -85,7 +106,6 @@ class WebsiteModal extends Component {
       return
     }
     const {form, imgName} = this.state
-    // console.log([...form.accountList, {userName: '', psw: ''}])
     this.setState({
       form: {...form, accountList: [...form.accountList, {userName: '', psw: ''}]},
       imgName
@@ -217,7 +237,7 @@ class WebsiteModal extends Component {
     let propsData = this.props.data
     if (this.props.action === 'update') {
       let image = new Image()
-      image.src = propsData.url
+      image.src = propsData.img
       image.className = 'gt-upload-img'
       this.refs.imgWrap.append(image)
     }
@@ -256,7 +276,7 @@ class WebsiteModal extends Component {
               <div className="gt-form__content">
                 <input
                   maxLength="12"
-                  defaultValue=''
+                  defaultValue={form.name.value}
                   className={cl({'gt-form-control': true, 'gt--error': !form.name.validate})}
                   type="text"
                   name="websiteName"
@@ -268,6 +288,7 @@ class WebsiteModal extends Component {
               <div className="gt-form__content">
                 <input
                   maxLength="100"
+                  defaultValue={form.url.value}
                   className={cl({'gt-form-control': true, 'gt--error': !form.url.validate})}
                   type="url"
                   name="websiteName"
@@ -320,6 +341,7 @@ class WebsiteModal extends Component {
                       <div className="fl">
                         <label className="gt-form__label">账号</label>
                         <input
+                          defaultValue={ele.userName}
                           maxLength="20"
                           className="gt-form-control"
                           type="text"
@@ -329,6 +351,7 @@ class WebsiteModal extends Component {
                       <div className="fl">
                         <label className="gt-form__label">密码</label>
                         <input
+                          defaultValue={ele.psw}
                           maxLength="36"
                           className="gt-form-control"
                           type="text"
@@ -345,6 +368,13 @@ class WebsiteModal extends Component {
           </div>
         </div>
         <div className="gt-modal__footer">
+          {
+            this.props.action === 'update' ? <button
+              className="gt-btn-line gt-btn-danger"
+              onClick={() => {
+                this.props.deleted(this.props.data, this.props.cancel)
+              }}>删除</button> : ''
+          }
           <button className="gt-btn-line" onClick={this.props.cancel}>取消</button>
           <button className="gt-btn-solid" onClick={this.validate}>确定</button>
         </div>

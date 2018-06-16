@@ -1,11 +1,15 @@
+#home-container {
+  padding: 20px;
+  margin-top: 52px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 90px;
+  overflow: auto;
+}
 #dashboard-container{
-  // padding-top: 85px;
-  min-width: 1000px;
-  margin: 0 20px 20px 195px;
-  padding: 0 20px 0 20px;
-  position: relative;
-  top: 77px;
-  background: #ffffff;
+  overflow: scroll;
 }
 .unit-group{
   .unit-header{
@@ -23,16 +27,6 @@
         margin-top: 7px;
       }
     }
-  }
-}
-.cell-box{
-  .cell-header{
-    h4{
-      font-size: 20px;
-    }
-  }
-  .cell-body{
-    min-height: 200px;
   }
 }
 
@@ -53,11 +47,13 @@
     }
     .gt-form-control{
       width: 134px;
+      border-radius: 4px;
     }
     .gt-icon{
       margin-left: 10px;
       padding: 2px;
-      border: 1px solid #2c3e50;
+      border: 1px solid #ffffff;
+      color: #ffffff;
       border-radius: 50%;
       text-align: center;
       cursor: pointer;
@@ -65,86 +61,110 @@
   }
 }
 
-
-.cell {
-  display: block;
-  // min-width: 180px;
-  height: 180px;
-  margin: 10px 24px;
-  position: relative;
-  border-radius: 3px;
-  overflow: hidden;
-  &:hover {
-    .cell-wrap {
-      .name {
-        bottom: 0px;
-      }
-      .gt-icon {
-        color: #ffffff;
-      }
-    }
-  }
-  .cell-wrap {
-    float: left;
+.control-box {
+  width: 400px;
+  height: 32px;
+  position: fixed;
+  left: 50%;
+  top: 110px;
+  margin-left: -200px;
+  background: rgba(0, 0, 0, .4);
+  .control-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    align-items: center;
     height: 100%;
-    // line-height: 180px;
-    width: 180px;
+    cursor: pointer;
+  }
+  li {
+    // display: inline-block;
+    flex-grow: 1;
+    margin-right: 20px;
+    color: #ffffff;
     text-align: center;
-    position: relative;
-    .logo {
-      display:inline-block;
-      width: 120px;
-      height: 120px;
-      // vertical-align: middle;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin: -60px 0 0 -60px;
-      opacity: 0.8;
+    transition: 0.3s all;
+    &:hover {
+      color: #01acf3;
     }
-    .name {
-      width: 100%;
-      position: absolute;
-      bottom: -24px;
-      text-align: center;
-      // text-indent: 14px;
-      font-size: 16px;
-      color: #ffffff;
-      background: rgba(0, 0, 0, 0.3);
-      transition: all 0.2s;
+    label {
+      display: block;
+      cursor: pointer;
     }
-    .gt-icon {
-      font-size: 24px;
-      color: #999999;
-    }
-    .c-edit {
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-    .c-delete {
-      position: absolute;
-      right: 0;
-      top: 0;
+    input {
+      display: none;
     }
   }
-  // .right-side {
-  //   display: inline-block;
-  //   height: 100%;
-  //   width: 180px;
-  //   position: relative;
-  //   color: #ffffff;
-  //   dl {
-  //     margin: 0;
-  //   }
-  // }
+  .active {
+    color: #01acf3;
+  }
 }
-.online-cell {
-  background: #01acf3;
+
+.cell-box{
+  .cell-header{
+    h4{
+      font-size: 20px;
+    }
+  }
+  .cell-body{
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    .cell {
+      display: block;
+      margin: 20px 30px 20px 30px;
+      padding: 20px;
+      width: 180px;
+      border-radius: 10px;
+      border: 1px solid #eeeeee;
+      transition: 0.3s all;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      // 禁止选中图片 文字
+      -webkit-touch-callout: none;
+      user-select: none;
+      &:hover {
+        border: 1px solid #01acf3;
+        box-shadow: 0 0 20px #01acf3;
+        .name {
+          color: #01acf3;
+          text-shadow:0 0 10px #01acf3;
+        }
+      }
+      &:focus {
+        outline: none;
+      }
+      // flex-grow: 1;
+      .logo {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+      }
+      .name {
+        color: #ffffff;
+        font-size: 18px;
+        text-decoration: none;
+        transition: 0.3s all;
+      }
+    }
+  }
 }
-.pre-online-cell {
-  background: #5bb96b;
-}
-.test-online-cell {
-  background: #f9b526;
+
+.side-nav {
+  position: fixed;
+  right: 20px;
+  bottom: 60px;
+  li {
+    width: 40px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    &:hover {
+      color: #01acf3;
+    }
+  }
 }

@@ -22,7 +22,6 @@ const deleteBusinessLine = params => {
   params.headers = {
     'Content-Type': 'application/json'
   }
-  console.log(params)
   const url = `/apiService/business/delete/${params.id}`
   return xhr(url, params)
 }

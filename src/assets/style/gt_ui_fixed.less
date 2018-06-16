@@ -1,8 +1,4 @@
-html{
-    height: auto;
-    overflow: auto;
-}
-
+@base-color: #01acf3;
 .gt-toast {
     text-align: left;
 }
@@ -24,6 +20,20 @@ html{
     .gt-backdrop{
         position: fixed;
     }
+    .gt-modal__content {
+        background: rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 7px rgba(1, 172, 243, 0.9)
+    }
+    .gt-modal__header {
+        color: #ffffff;
+        border-bottom: 1px solid @base-color;
+    }
+    .gt-modal__footer {
+        border-top: 1px solid @base-color;
+    }
+    // .gt-upload__style {
+    //     border-color: #ffffff;
+    // }
 }
 .gt-modal__content, .gt-modal__body {
     overflow: visible;
@@ -58,6 +68,14 @@ html{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.gt-comfirm-modal {
+    .gt-modal__p {
+        color: #ffffff;
+    }
+}
+.gt-upload__style .gt-icon, .gt-upload__img-text, .gt-form__tip-block {
+    color: #ffffff;
+}
 /* modal end */
 
 /* form */
@@ -68,6 +86,54 @@ html{
                 padding-bottom: 0;
             }
         }
+    }
+    .gt-form__label {
+        color: #ffffff;
+    }
+    .gt-form-control {
+        background: none;
+        color: #ffffff;
+        transition: 0.5s all;
+        &:focus {
+            border-color: @base-color;
+            box-shadow: 0 0 8px rgba(1, 172, 243, 1)
+        }
+    }
+    .gt--error {
+        &:focus {
+            border-color: #ed3535;
+            box-shadow: 0 0 6px #f9c2c2;
+        }
+    }
+    .gt-radio__txt {
+        color: #ffffff;
+    }
+}
+.gt-btn-line {
+    color: #ffffff;
+    background: none;
+    transition: 0.5s all;
+    &:hover {
+        color: #ffffff;
+        background: rgba(256, 256, 256, 0.4)
+    }
+}
+.gt-btn-solid {
+    color: @base-color;
+    background: none;
+    transition: 0.5s all;
+    &:hover {
+        background: rgba(1, 172, 243, .4)
+    }
+}
+.gt-btn-danger {
+    float: left;
+    color: #f16464;
+    border: 1px solid #f16464;
+    &:hover, &:focus {
+        color: #f16464;
+        border: 1px solid #f16464;
+        background: rgba(252, 0, 83, .4)
     }
 }
 /* form end */

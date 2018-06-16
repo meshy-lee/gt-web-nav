@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Router, Route, IndexRedirect, browserHistory, IndexRoute} from 'react-router'
+import {Router, Route, IndexRedirect, hashHistory, IndexRoute} from 'react-router'
 // import Box from './router_component/box'
 import {connect} from 'react-redux'
 import App from './../App'
@@ -22,7 +22,7 @@ class PageRouter extends Component {
   render () {
     // const init = this.props.init
     return (
-      <Router history={browserHistory}>
+      <Router history={hashHistory}>
         <Route name='App' path="/" component={App}>
           <IndexRedirect to="bussinessLine" />
           <Route name='bussinessLine' path="/bussinessLine" getComponent={BusinessLineIndex}>

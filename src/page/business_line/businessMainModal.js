@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 import React, {Component} from 'react'
-import './index.less'
 import {addBusinessLine, updateBusinessLine} from '@/api/business_line'
 import {uploadImg} from '@/api/common'
+import './index.less'
 class BusinessMainModal extends Component {
   constructor () {
     super(...arguments)
@@ -44,11 +44,6 @@ class BusinessMainModal extends Component {
     let pass = !!(val !== '' && val.length <= 6)
     this.setItemValidate(val, 'businessLineName', pass)
   }
-  // handleChange (ev) {
-  //   const val = ev.target.value
-  //   let pass = !!(val !== '' && val.length <= 6)
-  //   this.setItemValidate(val, 'businessLineName', pass)
-  // }
   setItemValidate (value, attr, bol) {
     const {form} = this.state
     this.setState({
@@ -88,7 +83,6 @@ class BusinessMainModal extends Component {
 
     // console.log(data)
     that._UploadImg({body: data}).then(res => {
-      console.log(res)
       if (!res.result) {
         this.$toast({
           type: 'success',
@@ -201,6 +195,13 @@ class BusinessMainModal extends Component {
           </div>
         </div>
         <div className="gt-modal__footer">
+          {
+            this.props.action === 'update' ? <button
+              className="gt-btn-line gt-btn-danger"
+              onClick={() => {
+                this.props.deleted(this.props.data, this.props.cancel)
+              }}>删除</button> : ''
+          }
           <button className="gt-btn-line" onClick={this.props.cancel}>取消</button>
           <button className="gt-btn-solid" onClick={this.validate}>确定</button>
         </div>

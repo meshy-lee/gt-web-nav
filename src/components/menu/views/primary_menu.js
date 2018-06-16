@@ -16,15 +16,12 @@ class PrimaryMenu extends Component {
       edit: false
     }
     this.componentAttr = {}
-    // this.initRouteInfo = this.initRouteInfo.bind(this)
     this.increase = this.increase.bind(this)
     this.edit = this.edit.bind(this)
     this.deleted = this.deleted.bind(this)
-    // this.componentAttr.currentId =
     this.initRouteInfo.apply(this)
   }
   initRouteInfo () {
-    // console.dir(browserHistory.getCurrentLocation().pathname.split('/'))
     const routeInfo = browserHistory.getCurrentLocation().pathname.split('/')
     if (routeInfo.length > 2) {
       this.componentAttr.currentId = Number(routeInfo[2])

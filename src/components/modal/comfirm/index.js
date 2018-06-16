@@ -30,7 +30,7 @@ function Comfirm (opts = {}) {
     }
     const element = (
       <ModalWrapper opts={{showBackdrop: false}}>
-        <div className="gt-modal gt--small">
+        <div className="gt-modal gt--small gt-comfirm-modal">
           <div className="gt-modal__scroll">
             <div className="gt-modal__content">
               <div className="gt-modal__body">
