@@ -11,24 +11,6 @@
 #dashboard-container{
   overflow: scroll;
 }
-.unit-group{
-  .unit-header{
-    height: 45px;
-    margin-bottom: 20px;
-    line-height: 45px;
-    h3{
-      display: block;
-      line-height: 45px;
-      font-size: 14px;
-
-      color: #999999;
-      border-bottom: 1px solid #cccccc;
-      .gt-btn-line{
-        margin-top: 7px;
-      }
-    }
-  }
-}
 
 .gt-form-horizontal-group{
   .gt-input--ws{
@@ -78,12 +60,17 @@
     cursor: pointer;
   }
   li {
-    // display: inline-block;
     flex-grow: 1;
     margin-right: 20px;
     color: #ffffff;
     text-align: center;
     transition: 0.3s all;
+    // 禁止选中图片 文字
+    -webkit-touch-callout: none;
+    user-select: none;
+    &:last-child {
+      margin-right: 0;
+    }
     &:hover {
       color: #01acf3;
     }

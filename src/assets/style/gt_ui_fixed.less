@@ -9,7 +9,17 @@
 }
 /* header end */
 /* modal */
-
+.modal-in{
+    overflow: hidden;
+}
+.modal-root {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+}
 .gt-modal {
     display: block;
     overflow: hidden;
@@ -31,9 +41,6 @@
     .gt-modal__footer {
         border-top: 1px solid @base-color;
     }
-    // .gt-upload__style {
-    //     border-color: #ffffff;
-    // }
 }
 .gt-modal__content, .gt-modal__body {
     overflow: visible;

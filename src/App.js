@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-// import Topbar from './components/topbar/index'
-// import MenuPanel from './components/menu/views/menu_panel'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import * as actions from './store/actions'
@@ -33,5 +31,3 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 export default connect(null, mapDispatchToProps)(App)
-
-// export default App

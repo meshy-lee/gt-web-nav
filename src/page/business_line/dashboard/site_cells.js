@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-class PreOnline extends Component {
+class SiteCells extends Component {
   constructor () {
     super()
     this.handleContext = this.handleContext.bind(this)
@@ -10,8 +10,7 @@ class PreOnline extends Component {
     return false
   }
   render () {
-    const cells = [...this.props.preOnlineList]
-    // console.log(this.props)
+    const cells = [...this.props.siteCellList]
     return (
       <div className='cell-box'>
         <div className='cell-body'>
@@ -20,7 +19,7 @@ class PreOnline extends Component {
               return (
                 <a
                   href={ele.url}
-                  className="cell pre-online-cell"
+                  className="cell"
                   key={ele.id}
                   onContextMenu={(ev) => {
                     this.handleContext(ev, ele)
@@ -39,4 +38,4 @@ class PreOnline extends Component {
     )
   }
 }
-export default PreOnline
+export default SiteCells

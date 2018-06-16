@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import Online from './online'
-import PreOnline from './pre_online'
-import TestOnline from './test_online'
+// import Online from './online'
+// import PreOnline from './pre_online'
+// import TestOnline from './test_online'
+import SiteCells from './site_cells'
 // import {ModalWrap} from '@/components/modal/modal_wrap/index'
 import WebsiteModal from './websiteModal'
 import {queryWebsiteList, deleteWebsite} from '@/api/website'
@@ -85,18 +86,18 @@ class DashboardIndex extends Component {
   }
   render () {
     const {onlineList, preOnlineList, testOnlineList, type} = this.state
-    let showComponent
+    let siteCellList
     switch (type) {
       case 0:
-        showComponent = <Online updateWebsite={this.updateWebsite} onlineList={onlineList}/>
+        siteCellList = [...onlineList]
         break
 
       case 1:
-        showComponent = <PreOnline updateWebsite={this.updateWebsite} preOnlineList={preOnlineList}/>
+        siteCellList = [...preOnlineList]
         break
 
       default:
-        showComponent = <TestOnline updateWebsite={this.updateWebsite} testOnlineList={testOnlineList}/>
+        siteCellList = [...testOnlineList]
         break
     }
     return (
@@ -137,7 +138,7 @@ class DashboardIndex extends Component {
         </div>
         <div className='unit-group'>
           <div className='unit-body'>
-            { showComponent }
+            <SiteCells updateWebsite={this.updateWebsite} siteCellList={siteCellList}/>
           </div>
         </div>
         <div className="side-nav">
