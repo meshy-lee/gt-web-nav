@@ -14,7 +14,7 @@ class BusinessMainModal extends Component {
         },
         imgUrl: {
           value: '',
-          validate: false
+          validate: true
         }
       },
       imgName: '',
@@ -23,10 +23,7 @@ class BusinessMainModal extends Component {
     if (this.props.action === 'update') {
       let propsData = this.props.data
       initState.form.businessLineName.value = propsData.name
-      initState.form.imgUrl = {
-        value: propsData.url,
-        validate: true
-      }
+      initState.form.imgUrl.value = propsData.url
       initState.id = propsData.id
       initState.imgName = propsData.url
     }
@@ -108,7 +105,7 @@ class BusinessMainModal extends Component {
   }
   validate () {
     let {businessLineName, imgUrl} = this.state.form
-    if (businessLineName.validate && imgUrl.validate) {
+    if (businessLineName.value && businessLineName.validate && imgUrl.validate) {
       const params = {
         businessLineName: businessLineName.value,
         imgUrl: imgUrl.value
@@ -121,10 +118,13 @@ class BusinessMainModal extends Component {
         this._Add({body: JSON.stringify(params)})
       }
     } else {
-      this.$toast({
-        type: 'error',
-        message: '请填写完整信息!'
-      })
+      let copyState = this.state
+
+      copyState.form.businessLineName.validate = !!businessLineName.value
+
+      copyState.form.imgUrl.validate = !!imgUrl.value
+
+      this.setState(copyState)
     }
   }
   _UploadImg (params) {
@@ -164,20 +164,24 @@ class BusinessMainModal extends Component {
     return (
       <div className="gt-modal__content">
         <div className="gt-modal__header">
-          <div className="gt-modal__header__title">增加业务线</div>
+          <div className="gt-modal__header__title">{this.props.action === 'update' ? '编辑业务线' : '新增业务线'}</div>
         </div>
         <div className="gt-modal__body">
           <div className="gt-form-bd-auto">
             <div className="gt-form-group">
               <label className="gt-form__label gt--required">业务线名称</label>
               <div className="gt-form__content">
-                <input value={this.state.form.businessLineName.value} onChange={this.validateBusinessLineName} className={form.businessLineName.validate ? 'gt-form-control' : 'gt-form-control gt--error'} onBlur={this.validateBusinessLineName} type="text" name="businessLineName"/>
+                <input
+                  value={this.state.form.businessLineName.value}
+                  onChange={this.validateBusinessLineName}
+                  className={form.businessLineName.validate ? 'gt-form-control' : 'gt-form-control gt--error'}
+                  onBlur={this.validateBusinessLineName} type="text" name="businessLineName"/>
               </div>
             </div>
             <div className="gt-form-group">
               <label className="gt-form__label gt--required">业务线图标</label>
               <div className="gt-form__content">
-                <div className="gt-upload">
+                <div className={form.imgUrl.validate ? 'gt-upload' : 'gt-upload gt--error'}>
                   <label className="gt-upload__style gt-upload-img__cell" ref="imgWrap">
                     <input type="file" className="gt-upload__file" onChange={this.uploadImg}/>
                   </label>

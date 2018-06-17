@@ -20,7 +20,7 @@ class WebsiteModal extends Component {
       },
       imgUrl: {
         value: '',
-        validate: false
+        validate: true
       },
       type: 0, // 线网、测试网、准现网
       belong: Number(this.props.data.belong), // 父级
@@ -55,7 +55,7 @@ class WebsiteModal extends Component {
   }
   validate () {
     let {name, url, imgUrl, type, belong, accountList} = this.state.form
-    if (name.value && name.validate && url.value && url.validate && imgUrl.value) {
+    if (name.value && name.validate && url.value && url.validate && imgUrl.value && imgUrl.validate) {
       const params = {
         name: name.value,
         url: url.value,
@@ -66,17 +66,20 @@ class WebsiteModal extends Component {
       }
       if (this.props.action === 'update') {
         params.id = this.props.data.id
-        console.log(params)
         this._Update({body: JSON.stringify(params)})
       } else {
-        console.log(params)
         this._Add({body: JSON.stringify(params)})
       }
     } else {
-      this.$toast({
-        type: 'error',
-        message: '请填写完整信息!'
-      })
+      let copyState = this.state
+
+      copyState.form.name.validate = !!name.value
+
+      copyState.form.url.validate = !!url.value
+
+      copyState.form.imgUrl.validate = !!imgUrl.value
+
+      this.setState(copyState)
     }
   }
   _Update (params) {
@@ -267,7 +270,7 @@ class WebsiteModal extends Component {
     return (
       <div className="gt-modal__content">
         <div className="gt-modal__header">
-          <div className="gt-modal__header__title">增加网站</div>
+          <div className="gt-modal__header__title">{this.props.action === 'update' ? '编辑' : '新增'}</div>
         </div>
         <div className="gt-modal__body">
           <div className="gt-form-bd-auto">
@@ -317,7 +320,7 @@ class WebsiteModal extends Component {
             <div className="gt-form-group">
               <label className="gt-form__label gt--required">网站图标</label>
               <div className="gt-form__content">
-                <div className="gt-upload">
+                <div className={cl({'gt-upload': true, 'gt--error': !form.imgUrl.validate})}>
                   <label className="gt-upload__style gt-upload-img__cell" ref="imgWrap">
                     <input type="file" className="gt-upload__file" onChange={this.uploadImg}/>
                   </label>
