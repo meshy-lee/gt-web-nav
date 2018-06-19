@@ -13,7 +13,7 @@ class SiteCells extends Component {
     const cells = [...this.props.siteCellList]
     return (
       <div className='cell-box'>
-        <div className='cell-body'>
+        <div className='cell-body' className={cells.length >= 5 ? 'cell-body' : 'cell-body cell-body-fixed'}>
           {
             cells.map(ele => {
               return (

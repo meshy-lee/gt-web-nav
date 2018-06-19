@@ -1,4 +1,5 @@
 @base-color: #01acf3;
+@base-error-color: #f16464;
 .gt-toast {
     text-align: left;
 }
@@ -31,8 +32,20 @@
         position: fixed;
     }
     .gt-modal__content {
-        background: rgba(0, 0, 0, 0.4);
-        box-shadow: 0 0 7px rgba(1, 172, 243, 0.9)
+        background: rgba(0, 0, 0, 0.6);
+        // filter: blur(1px);
+        box-shadow: 0 0 7px rgba(1, 172, 243, 0.9);
+        &::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            // background: rgba(0, 0, 0, 0.1);
+            // filter: blur(1px);
+        }
     }
     .gt-modal__header {
         color: #ffffff;
@@ -108,8 +121,14 @@
     }
     .gt--error {
         &:focus {
-            border-color: #ed3535;
+            border-color: @base-error-color;
             box-shadow: 0 0 6px #f9c2c2;
+        }
+        .gt-upload__style--img {
+            border-color: @base-error-color;
+        }
+        .gt-form__tip-block {
+            color: @base-error-color;
         }
     }
     .gt-radio__txt {
@@ -135,11 +154,11 @@
 }
 .gt-btn-danger {
     float: left;
-    color: #f16464;
-    border: 1px solid #f16464;
+    color: @base-error-color;
+    border: 1px solid @base-error-color;
     &:hover, &:focus {
-        color: #f16464;
-        border: 1px solid #f16464;
+        color: @base-error-color;
+        border: 1px solid @base-error-color;
         background: rgba(252, 0, 83, .4)
     }
 }

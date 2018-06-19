@@ -1,4 +1,4 @@
-import {FETCH_STARTED, FETCH_SUCCESS, FETCH_FAILURE} from './action_types.js'
+import {FETCH_STARTED, FETCH_SUCCESS, FETCH_FAILURE} from './action_types'
 import {queryBusinessLineList} from '@/api/business_line'
 import {GlobalLoading} from '@/components/index'
 export const fetchMenuStart = () => ({type: FETCH_STARTED})

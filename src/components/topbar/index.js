@@ -19,6 +19,7 @@ class Topbar extends Component {
     this.increase = this.increase.bind(this)
     this.deleted = this.deleted.bind(this)
     this.initRouteInfo.apply(this)
+    this.shake = this.shake.bind(this)
   }
   initRouteInfo () {
     const routeInfo = browserHistory.getCurrentLocation().pathname.split('/')
@@ -53,6 +54,25 @@ class Topbar extends Component {
     }, res => {})
     return false
   }
+  shake (obj, attr) {
+    let arr = [] // 这个是抖动数值的数组
+    for (let j = 14; j > 0; j -= 2) {
+      arr.push(j, -j)
+    }
+
+    clearInterval(obj.timer)
+
+    obj.style.left = 0 + 'px' // 先恢复到初始位置
+    let num = 0
+    obj.timer = setInterval(function () {
+      obj.style.left = arr[num] + 'px'
+      num++
+      if (num === arr.length) {
+        clearInterval(obj.timer)
+        obj.style.left = 0 + 'px' // 清除定时器 同时恢复到初始位置
+      }
+    }, 16)
+  }
   componentDidMount () {
     window.onhashchange = () => { // 暂用hash来做
       this.setState({
@@ -65,7 +85,7 @@ class Topbar extends Component {
     return (
       <header className="common-top-bar-box clear">
         <div className="fl header-left-side">
-          <img className="logo" src={img}/>
+          <img onMouseEnter={(ev) => { return this.shake(ev.target) }} ref="logo" className="logo" src={img} title="珍爱生命，请使用chrome！"/>
           <div className="tip">
             <div className="arrow-left arrow-box">
               <b className="left">
