@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
-// import Online from './online'
-// import PreOnline from './pre_online'
-// import TestOnline from './test_online'
 import SiteCells from './site_cells'
-// import {ModalWrap} from '@/components/modal/modal_wrap/index'
 import WebsiteModal from './websiteModal'
 import {queryWebsiteList, deleteWebsite} from '@/api/website'
 import './index.less'
 
+const easterEggs = [
+  '秋刀鱼的滋味，喵和你都想了解。',
+  '好想告诉我的她，这里像幅画~',
+  '彩蛋送给有缘人~',
+  '顶着大太阳，想为妳撑伞。',
+  '每个人都很普通，哭哭啼啼来到尘世中~',
+  '我听见雨滴落在青青草地，却听不见妳的声音。',
+  '确定过眼神，我遇上对的人。',
+  '橡树的绿芽呀，白色的竹篱笆。'
+]
 class DashboardIndex extends Component {
   constructor () {
     super()
@@ -100,6 +106,11 @@ class DashboardIndex extends Component {
         siteCellList = [...testOnlineList]
         break
     }
+    let copyEasterEggs = [...easterEggs]
+    // console.log(Math.floor(Math.random() * copyEasterEggs.length))
+    siteCellList.forEach((ele, index) => {
+      if (Math.random() * 10 >= 5) ele.title = copyEasterEggs.splice(Math.floor(Math.random() * copyEasterEggs.length), 1)[0]
+    })
     return (
       <div id='dashboard-container'>
         <div className="control-box">
@@ -143,8 +154,8 @@ class DashboardIndex extends Component {
         </div>
         <div className="side-nav">
           <ul>
-            <li onClick={this.toTop}>Top</li>
-            <li onClick={this.addWebsite}><i className="gt-icon icon-add"></i></li>
+            <li title="做上火箭，自己动~" onClick={this.toTop}>Top</li>
+            <li title="相信你们不会发现彩蛋~" onClick={this.addWebsite}><i className="gt-icon icon-add"></i></li>
           </ul>
         </div>
       </div>

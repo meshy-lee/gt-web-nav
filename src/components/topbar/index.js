@@ -117,7 +117,11 @@ class Topbar extends Component {
               </ul>
             </div>
           </div>
-          <button className="increase-group-btn" onClick={this.increase}>新增</button>
+          <button
+            title="再点我，再点我就删库~"
+            type="button"
+            className="increase-group-btn"
+            onClick={this.increase}>新增</button>
         </div>
       </header>
     )

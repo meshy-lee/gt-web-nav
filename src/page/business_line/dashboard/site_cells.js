@@ -18,6 +18,7 @@ class SiteCells extends Component {
             cells.map(ele => {
               return (
                 <a
+                  title={ele.title}
                   href={ele.url}
                   className="cell"
                   key={ele.id}
