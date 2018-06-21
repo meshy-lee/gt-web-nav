@@ -105,7 +105,7 @@ class BusinessMainModal extends Component {
   }
   validate () {
     let {businessLineName, imgUrl} = this.state.form
-    if (businessLineName.value && businessLineName.validate && imgUrl.validate) {
+    if (businessLineName.value && businessLineName.validate && imgUrl.validate && imgUrl.value) {
       const params = {
         businessLineName: businessLineName.value,
         imgUrl: imgUrl.value
@@ -172,6 +172,7 @@ class BusinessMainModal extends Component {
               <label className="gt-form__label gt--required">业务线名称</label>
               <div className="gt-form__content">
                 <input
+                  placeholder="请输入业务线名称，不得超过6个字符。"
                   value={this.state.form.businessLineName.value}
                   onChange={this.validateBusinessLineName}
                   className={form.businessLineName.validate ? 'gt-form-control' : 'gt-form-control gt--error'}

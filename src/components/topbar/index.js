@@ -34,7 +34,7 @@ class Topbar extends Component {
   }
   deleted (target, cancel) {
     this.$comfirm({
-      message: `确认删除${target.name}？`
+      message: `确认删除 ${target.name} ？`
     }).then(res => {
       deleteBusinessLine({id: target.id}).then(res => {
         this.$toast({

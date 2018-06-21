@@ -12,7 +12,11 @@ const easterEggs = [
   '每个人都很普通，哭哭啼啼来到尘世中~',
   '我听见雨滴落在青青草地，却听不见妳的声音。',
   '确定过眼神，我遇上对的人。',
-  '橡树的绿芽呀，白色的竹篱笆。'
+  '橡树的绿芽呀，白色的竹篱笆。',
+  '污？臂儿相兜，唇儿相凑，舌儿相弄。',
+  '纵使举案齐眉，终究意难平。',
+  '抽屉泛黄的日记，榨干了回忆，那笑容是夏季。',
+  '缺氧过后的爱情，粗心的眼泪是多余。'
 ]
 class DashboardIndex extends Component {
   constructor () {
@@ -52,7 +56,7 @@ class DashboardIndex extends Component {
   }
   _Deleted (target, cancel) {
     this.$comfirm({
-      message: `确认删除${target.name}？`
+      message: `确认删除 ${target.name} ？`
     }).then(res => {
       deleteWebsite({id: target.id}).then(res => {
         this.$toast({
@@ -107,7 +111,6 @@ class DashboardIndex extends Component {
         break
     }
     let copyEasterEggs = [...easterEggs]
-    // console.log(Math.floor(Math.random() * copyEasterEggs.length))
     siteCellList.forEach((ele, index) => {
       if (Math.random() * 10 >= 5) ele.title = copyEasterEggs.splice(Math.floor(Math.random() * copyEasterEggs.length), 1)[0]
     })

@@ -6,7 +6,7 @@ function ModalWrap (opts = {}, WrapperComponent) {
   let defaultOpts = {
     timeout: 2000,
     zIndex: 1000,
-    showBackdrop: false
+    showBackdrop: true
   }
   let mergeOpts = {
     ...defaultOpts,

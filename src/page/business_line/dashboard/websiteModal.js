@@ -278,6 +278,7 @@ class WebsiteModal extends Component {
               <label className="gt-form__label gt--required">网站名称</label>
               <div className="gt-form__content">
                 <input
+                  placeholder="请输入网站名称，不得超过12个字符。"
                   maxLength="12"
                   defaultValue={form.name.value}
                   className={cl({'gt-form-control': true, 'gt--error': !form.name.validate})}
@@ -290,6 +291,7 @@ class WebsiteModal extends Component {
               <label className="gt-form__label gt--required">网站链接</label>
               <div className="gt-form__content">
                 <input
+                  placeholder="请输入网站链接，不得超过100个字符。"
                   maxLength="100"
                   defaultValue={form.url.value}
                   className={cl({'gt-form-control': true, 'gt--error': !form.url.validate})}
