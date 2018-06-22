@@ -55,7 +55,8 @@ class WebsiteModal extends Component {
   }
   validate () {
     let {name, url, imgUrl, type, belong, accountList} = this.state.form
-    if (name.value && name.validate && url.value && url.validate && imgUrl.value && imgUrl.validate) {
+    const reg = /(www|http:|https:)+[^\s]+[\w]/
+    if (name.value && name.validate && reg.test(url.value) && url.validate && imgUrl.value && imgUrl.validate) {
       const params = {
         name: name.value,
         url: url.value,
@@ -75,7 +76,7 @@ class WebsiteModal extends Component {
 
       copyState.form.name.validate = !!name.value
 
-      copyState.form.url.validate = !!url.value
+      copyState.form.url.validate = reg.test(url.value)
 
       copyState.form.imgUrl.validate = !!imgUrl.value
 
