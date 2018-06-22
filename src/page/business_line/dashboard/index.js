@@ -22,7 +22,7 @@ class DashboardIndex extends Component {
   constructor () {
     super()
     this.state = {
-      type: 0,
+      type: 2,
       onlineList: [],
       preOnlineList: [],
       testOnlineList: []
@@ -75,7 +75,7 @@ class DashboardIndex extends Component {
         ele.accountList = JSON.parse(ele.accountList)
       })
       this.setState({
-        type: 0,
+        type: 2,
         onlineList: resData.filter(ele => ele.type === 0),
         preOnlineList: resData.filter(ele => ele.type === 1),
         testOnlineList: resData.filter(ele => ele.type === 2)
@@ -118,14 +118,14 @@ class DashboardIndex extends Component {
       <div id='dashboard-container'>
         <div className="control-box">
           <ul className="control-list">
-            <li className={type === 0 ? 'active' : ''}>
+            <li className={type === 2 ? 'active' : ''}>
               <label>
                 <input
-                  checked={type === 0}
+                  checked={type === 2}
                   type="radio"
                   name="type"
-                  value="0" onChange={this.tabType}/>
-                <span>线网</span>
+                  value="2" onChange={this.tabType}/>
+                <span>测试网</span>
               </label>
             </li>
             <li className={type === 1 ? 'active' : ''}>
@@ -138,14 +138,14 @@ class DashboardIndex extends Component {
                 <span>准线网</span>
               </label>
             </li>
-            <li className={type === 2 ? 'active' : ''}>
+            <li className={type === 0 ? 'active' : ''}>
               <label>
                 <input
-                  checked={type === 2}
+                  checked={type === 0}
                   type="radio"
                   name="type"
-                  value="2" onChange={this.tabType}/>
-                <span>测试网</span>
+                  value="0" onChange={this.tabType}/>
+                <span>线网</span>
               </label>
             </li>
           </ul>

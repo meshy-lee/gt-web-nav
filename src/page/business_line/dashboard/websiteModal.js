@@ -128,12 +128,12 @@ class WebsiteModal extends Component {
     let reg = /[.](jpg|gif|png|JPG|PNG|GIF|jpeg)$/
     if (!e.target.files[0]) return
     if (e.target.files[0].name.match(reg) == null) {
-      this.$toastr({type: 'toast-error', message: '文件格式不正确'})
+      this.$toast({type: 'error', message: '文件格式不正确'})
       return
     }
     this.$fileName = e.target.files[0].name
-    if (e.target.files[0].size > 51200) {
-      this.$toastr({type: 'toast-error', message: '图片需小于50KB'})
+    if (e.target.files[0].size > 102400) {
+      this.$toast({type: 'error', message: '图片需小于100KB'})
       return
     }
 
@@ -148,13 +148,18 @@ class WebsiteModal extends Component {
     let data = new FormData()
     data.append('file', target)
     that._UploadImg({body: data}).then(res => {
-      console.log(res)
       if (!res.result) {
         this.$toast({
           type: 'success',
           message: '上传成功!'
         })
         this.autoSetState('imgUrl', res.url, true)
+      } else {
+        this.$toast({
+          type: 'error',
+          message: res.msg
+        })
+        return false
       }
       let reader = new FileReader()
       reader.readAsDataURL(target)

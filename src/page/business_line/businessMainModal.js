@@ -57,28 +57,26 @@ class BusinessMainModal extends Component {
     let that = this
     let reg = /[.](jpg|gif|png|JPG|PNG|GIF|jpeg)$/
     if (!e.target.files[0]) return
-    if (e.target.files[0].name.match(reg) == null) {
-      this.$toastr({type: 'toast-error', message: '文件格式不正确'})
+    let $fileName = e.target.files[0].name
+    if ($fileName.match(reg) === null) {
+      this.$toast({type: 'error', message: '文件格式不正确'})
       return
     }
-    this.$fileName = e.target.files[0].name
-    if (e.target.files[0].size > 51200) {
-      this.$toastr({type: 'toast-error', message: '图片需小于50KB'})
+    if (e.target.files[0].size > 102400) {
+      this.$toast({type: 'error', message: '图片需小于100KB'})
       return
     }
-
     const target = e.target.files[0]
     const {form} = this.state
     this.setState({
       form: {
         ...form
       },
-      imgName: e.target.files[0].name
+      imgName: $fileName
     })
     let data = new FormData()
     data.append('file', target)
 
-    // console.log(data)
     that._UploadImg({body: data}).then(res => {
       if (!res.result) {
         this.$toast({
@@ -86,6 +84,12 @@ class BusinessMainModal extends Component {
           message: '上传成功!'
         })
         this.setItemValidate(res.url, 'imgUrl', true)
+      } else {
+        this.$toast({
+          type: 'error',
+          message: res.msg
+        })
+        return false
       }
       let reader = new FileReader()
       reader.readAsDataURL(target)
