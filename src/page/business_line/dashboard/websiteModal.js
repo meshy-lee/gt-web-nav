@@ -29,6 +29,7 @@ class WebsiteModal extends Component {
         psw: ''
       }]
     }
+    let state = {}
     if (this.props.action === 'update') {
       let propsData = {...this.props.data}
       form.name.value = propsData.name
@@ -40,12 +41,13 @@ class WebsiteModal extends Component {
         validate: true
       }
       form.id = propsData.id
-      form.imgName = propsData.url
+      form.imgName = propsData.img
+      state = {
+        form,
+        imgName: propsData.img
+      }
     }
-    this.state = {
-      form,
-      imgName: ''
-    }
+    this.state = state
     this.increaseUser = this.increaseUser.bind(this)
     this.autoSetState = this.autoSetState.bind(this)
     this.handleChangeName = this.handleChangeName.bind(this)
