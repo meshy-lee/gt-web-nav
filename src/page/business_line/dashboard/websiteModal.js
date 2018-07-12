@@ -46,8 +46,13 @@ class WebsiteModal extends Component {
         form,
         imgName: propsData.img
       }
+      this.state = state
+    } else {
+      this.state = {
+        form
+      }
     }
-    this.state = state
+
     this.increaseUser = this.increaseUser.bind(this)
     this.autoSetState = this.autoSetState.bind(this)
     this.handleChangeName = this.handleChangeName.bind(this)
